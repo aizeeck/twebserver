@@ -10,28 +10,36 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @NamedStoredProcedureQueries({
-@NamedStoredProcedureQuery(
-        name = "getDeviceHourly",
-        procedureName = "get_hourly",
-        resultClasses = Device.class,
-        parameters = {
-                @StoredProcedureParameter(name = "tId", type = String.class, mode = ParameterMode.IN)
-        }
-),
-@NamedStoredProcedureQuery(
-        name = "getDeviceDaily",
-        procedureName = "get_daily",
-        resultClasses = Device.class,
-        parameters = {
-                @StoredProcedureParameter(name = "tId", type = String.class, mode = ParameterMode.IN)
-        }
-),
         @NamedStoredProcedureQuery(
-                name = "getAllDeviceDaily",
-                procedureName = "get_daily_all",
+                name = "getAllDeviceMonthly",
+                procedureName = "get_monthly_all",
                 resultClasses = Device.class,
-                parameters = {}
-        )
+                parameters = {
+                        @StoredProcedureParameter(name = "startDay", type = Integer.class, mode = ParameterMode.IN)
+                }
+        ),
+        @NamedStoredProcedureQuery(
+                name = "getDeviceHourly",
+                procedureName = "get_hourly",
+                resultClasses = Device.class,
+                parameters = {
+                        @StoredProcedureParameter(name = "tId", type = String.class, mode = ParameterMode.IN)
+                }
+        ),
+        @NamedStoredProcedureQuery(
+                name = "getDeviceDaily",
+                procedureName = "get_daily",
+                resultClasses = Device.class,
+                parameters = {
+                        @StoredProcedureParameter(name = "tId", type = String.class, mode = ParameterMode.IN)
+                }
+        ),
+        @NamedStoredProcedureQuery(
+                        name = "getAllDeviceDaily",
+                        procedureName = "get_daily_all",
+                        resultClasses = Device.class,
+                        parameters = {}
+                )
 })
 @Entity
  public class Device implements Serializable {

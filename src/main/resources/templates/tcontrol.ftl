@@ -1,7 +1,12 @@
 <#import "parts/common.ftl" as c>
 <@c.page "T control">
-
-<#list devices as d>
+    <div>
+        <a href="/device/alldevconsumptiondaily">Show daily consumption (all devices)</a>
+    </div>
+    <div>
+        <a href="/device/alldevconsumptionmonthly">Show monthly consumption (all devices)</a>
+    </div>
+    <#list devices as d>
     <div class="card text-white bg-dark mb-3" style="max-width: 30rem;">
         <div class="card-header">
             <a href="/device/hourlyconsumption/${d.gettId()}" class="card-link">${d.getName()} - hourly</a>

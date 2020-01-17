@@ -42,6 +42,14 @@ public class DeviceDetailesController {
         return "alldevconsumptiondaily";
     }
 
+    @GetMapping("/alldevconsumptionmonthly")
+    public String getDeviceAllDevMonthlyConsumption(Model model) {
+        List<Device> devices = deviceRepo.getAllDeviceMonthly(10);
+        Map<String, Map<String, Integer>> devicesDaily = getNormalizedDevLists(devices);
+        model.addAttribute("devicesMonthly", devicesDaily);
+        return "alldevconsumptionmonthly";
+    }
+
     private Map<String, Map<String, Integer>> getNormalizedDevLists(List<Device> deviceList) {
         Map<String, Map<String, Integer>> data = new HashMap<>();
         List<List<Device>> lists = new ArrayList<>();
@@ -84,4 +92,6 @@ public class DeviceDetailesController {
         }
         return data;
     }
+
+
 }

@@ -35,4 +35,12 @@ public class DeviceRepoImpl implements DeviceRepoCustom {
                 em.createNamedStoredProcedureQuery("getAllDeviceDaily");
         return getDailyConsumption.getResultList();
     }
+
+    @Override
+    public List<Device> getAllDeviceMonthly(int startDay) {
+        StoredProcedureQuery getDailyConsumption =
+                em.createNamedStoredProcedureQuery("getAllDeviceMonthly")
+                        .setParameter("startDay", startDay);;
+        return getDailyConsumption.getResultList();
+    }
 }

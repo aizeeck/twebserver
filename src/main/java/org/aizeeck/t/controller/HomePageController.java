@@ -9,7 +9,7 @@ import java.util.Map;
 @Controller
 public class HomePageController {
 
-    @GetMapping("/main")
+    @GetMapping("/")
     public String mainPage(Map<String, Object> model) {
         return "main";
     }

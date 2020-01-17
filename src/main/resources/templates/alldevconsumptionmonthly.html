@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Consumption</title>
+</head>
+<body>
+
+<!--<tr th:each="device : ${devices}">
+    <td th:text="${device.getId()}">1</td>
+    <td><a href="#" th:text="${device.getName()}">Title ...</a></td>
+</tr>-->
+
+<div>
+    <a href="/tcontrol">Tcontrol</a>
+</div>
+
+<script th:inline="javascript">
+        /*<![CDATA[*/
+        var listVals = /*[[${devicesMonthly}]]*/ "Test3";
+        /*]]>*/
+        var colorsVar = ["blue", "red", "green", "brown"];
+        var counter = 0;
+
+        var listData = [];
+        var data = [];
+
+        for (let [key, value] of Object.entries(listVals)) {
+            var dataPoints = [];
+            for (let [key1, value1] of Object.entries(value)) {
+                dataPoints.push({y: value1, x: new Date(key1)});
+            }
+            data.push(dataPoints);
+            listData.push(data);
+            counter = counter + 1;
+        }
+
+        window.onload = function () {
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                title:{
+                    text: "Monthly consumption all devices",
+                    fontFamily: "arial black",
+                    fontColor: "#695A42"
+                },
+                axisX: {
+                    interval: 1,
+                    intervalType: "day",
+                    xValueFormatString: "DD MMM"
+                },
+                axisY:{
+                    title: "Monthly consumption in kWt",
+                    valueFormatString: "##0",
+                    gridColor: "#B6B1A8",
+                    tickColor: "#B6B1A8"
+                },
+                toolTip: {
+                    shared: true,
+                    content: toolTipContent
+                },
+                data: [{
+                        type: "stackedColumn",
+                        indexLabel: "label",
+                        showInLegend: true,
+                        color: colorsVar[0],
+                        name: "null",
+                        dataPoints: null
+                    },
+                    {
+                        type: "stackedColumn",
+                        indexLabel: "label",
+                        showInLegend: true,
+                        name: "null",
+                        color: colorsVar[0],
+                        dataPoints: null
+                    },
+                    {
+                        type: "stackedColumn",
+                        showInLegend: true,
+                        indexLabel: "label",
+                        name: "null",
+                        color: colorsVar[0],
+                        dataPoints: null
+                    },
+                    {
+                        type: "stackedColumn",
+                        showInLegend: true,
+                        indexLabel: "label",
+                        name: "null",
+                        color: colorsVar[0],
+                        dataPoints: null
+                    },
+                    {
+                        type: "stackedColumn",
+                        showInLegend: true,
+                        indexLabel: "label",
+                        name: "null",
+                        color: colorsVar[0],
+                        dataPoints: null
+                    },
+                    {
+                        type: "stackedColumn",
+                        showInLegend: true,
+                        indexLabel: "label",
+                        name: "null",
+                        color: colorsVar[0],
+                        dataPoints: null
+                    },
+                    {
+                        type: "stackedColumn",
+                        showInLegend: true,
+                        indexLabel: "label",
+                        name: "null",
+                        color: colorsVar[0],
+                        dataPoints: null
+                    }]
+            });
+            
+            chart.render();
+
+            var nameKeys = Object.keys(listVals);
+            for(i=0; i<listData.length; i++) {
+                chart.data[i].set("name", nameKeys[i]);
+                chart.data[i].set("indexLabel", "");
+                chart.data[i].set("color", colorsVar[i]);
+                chart.data[i].set("dataPoints", data[i]);
+            }
+
+            function toolTipContent(e) {
+                var str = "";
+                var total = 0;
+                var str2, str3;
+                for (var i = 0; i < e.entries.length; i++){
+                    var  str1 = "<span style= \"color:"+e.entries[i].dataSeries.color + "\"> "+e.entries[i].dataSeries.name+"</span>: <strong>"+e.entries[i].dataPoint.y+"</strong> kWt<br/>";
+                    total = e.entries[i].dataPoint.y + total;
+                    str = str.concat(str1);
+                }
+                str2 = "<span style = \"color:DodgerBlue;\"><strong>"+(e.entries[0].dataPoint.x).getDate()+"</strong></span><br/>";
+                total = Math.round(total * 100) / 100;
+                str3 = "<span style = \"color:Tomato\">Total:</span><strong> "+total+"</strong> kWt<br/>";
+                return (str2.concat(str)).concat(str3);
+            }
+
+        }
+    </script>
+
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+</html>
