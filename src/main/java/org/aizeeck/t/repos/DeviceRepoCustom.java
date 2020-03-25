@@ -9,4 +9,5 @@ public interface DeviceRepoCustom {
     List<Device> getDeviceDaily(String tId);
     List<Device> getAllDeviceDaily();
     List<Device> getAllDeviceMonthly(int startDay);
+    List<Device> getAllDeviceHourly();
 }

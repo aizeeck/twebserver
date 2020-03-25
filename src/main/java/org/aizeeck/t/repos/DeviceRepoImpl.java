@@ -43,4 +43,11 @@ public class DeviceRepoImpl implements DeviceRepoCustom {
                         .setParameter("startDay", startDay);;
         return getDailyConsumption.getResultList();
     }
+
+    @Override
+    public List<Device> getAllDeviceHourly() {
+        StoredProcedureQuery getDailyConsumption =
+                em.createNamedStoredProcedureQuery("getAllDeviceHourly");
+        return getDailyConsumption.getResultList();
+    }
 }

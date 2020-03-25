@@ -39,7 +39,13 @@ import java.util.Date;
                         procedureName = "get_daily_all",
                         resultClasses = Device.class,
                         parameters = {}
-                )
+        ),
+        @NamedStoredProcedureQuery(
+                name = "getAllDeviceHourly",
+                procedureName = "get_hourly_all",
+                resultClasses = Device.class,
+                parameters = {}
+        )
 })
 @Entity
  public class Device implements Serializable {

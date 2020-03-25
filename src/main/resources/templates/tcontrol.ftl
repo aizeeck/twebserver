@@ -1,6 +1,9 @@
 <#import "parts/common.ftl" as c>
 <@c.page "T control">
     <div>
+        <a href="/device/alldevconsumptionhourly">Show hourly consumption (all devices)</a>
+    </div>
+    <div>
         <a href="/device/alldevconsumptiondaily">Show daily consumption (all devices)</a>
     </div>
     <div>

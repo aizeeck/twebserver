@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Consumption</title>
+</head>
+<body>
+
+<div>
+    <a href="/tcontrol">Tcontrol</a>
+</div>
+
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+    var listVals = /*[[${devicesDaily}]]*/ "Test3";
+    /*]]>*/
+    var colorsVar = ["blue", "red", "green", "brown"];
+    var counter = 0;
+
+    var listData = [];
+    var data = [];
+
+    minDate = new Date();
+    maxDate = new Date();
+
+    for (let [key, value] of Object.entries(listVals)) {
+        var dataPoints = [];
+        for (let [key1, value1] of Object.entries(value)) {
+            dataPoints.push({y: value1, x: new Date(key1)});
+            if (minDate > new Date(key1)) {
+                minDate = new Date(key1);
+            }
+            // if (maxDate < new Date(key1)) {
+            //     maxDate = new Date(key1);
+            // }
+        }
+        data.push(dataPoints);
+        listData.push(data);
+        counter = counter + 1;
+    }
+
+    window.onload = function () {
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            zoomEnabled: true,
+            animationEnabled: true,
+            title:{
+                text: "Google - Consolidated Quarterly Revenue",
+                fontFamily: "arial black",
+                fontColor: "#695A42"
+            },
+            axisX: {
+                interval: 1,
+                intervalType: "day"
+            },
+            axisY:{
+                valueFormatString:"$#0bn",
+                gridColor: "#B6B1A8",
+                tickColor: "#B6B1A8"
+            },
+            toolTip: {
+                shared: true,
+                content: toolTipContent
+            },
+            data: [{
+                type: "stackedColumn",
+                showInLegend: true,
+                color: "#696661",
+                name: "Q1",
+                dataPoints: [
+                ]
+            },
+                {
+                    type: "stackedColumn",
+                    showInLegend: true,
+                    name: "Q2",
+                    color: "#EDCA93",
+                    dataPoints: [
+                    ]
+                },
+                {
+                    type: "stackedColumn",
+                    showInLegend: true,
+                    name: "Q3",
+                    color: "#695A42",
+                    dataPoints: [
+                    ]
+                },
+                {
+                    type: "stackedColumn",
+                    showInLegend: true,
+                    name: "Q4",
+                    color: "#B6B1A8",
+                    dataPoints: [
+                    ]
+                }]
+        });
+        chart.render();
+
+        var nameKeys = Object.keys(listVals);
+        for(i=0; i<listData.length; i++) {
+            chart.data[i].set("name", nameKeys[i]);
+            chart.data[i].set("indexLabel", "");
+            chart.data[i].set("color", colorsVar[i]);
+            chart.data[i].set("dataPoints", data[i]);
+        }
+
+        function toolTipContent(e) {
+            var str = "";
+            var total = 0;
+            var str2, str3;
+            for (var i = 0; i < e.entries.length; i++){
+                var  str1 = "<span style= \"color:"+e.entries[i].dataSeries.color + "\"> "+e.entries[i].dataSeries.name+"</span>: $<strong>"+e.entries[i].dataPoint.y+"</strong>bn<br/>";
+                total = e.entries[i].dataPoint.y + total;
+                str = str.concat(str1);
+            }
+            str2 = "<span style = \"color:DodgerBlue;\"><strong>"+(e.entries[0].dataPoint.x).getFullYear()+"</strong></span><br/>";
+            total = Math.round(total * 100) / 100;
+            str3 = "<span style = \"color:Tomato\">Total:</span><strong> $"+total+"</strong>bn<br/>";
+            return (str2.concat(str)).concat(str3);
+        }
+
+    }
+</script>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+</html>

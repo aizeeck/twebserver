@@ -1,7 +1,10 @@
 .idea/
 target/
+test/
 *.iml
+*bkp*
 application.properties
 out/*
 src/main/java/META-INF/*
 src/main/java/enterpoints/*
+src/main/resources/t.properties

@@ -37,7 +37,8 @@ public class DeviceDetailesController {
     @GetMapping("/alldevconsumptiondaily")
     public String getDeviceAllDevDailyConsumption(Model model) {
         List<Device> devices = deviceRepo.getAllDeviceDaily();
-        Map<String, Map<String, Integer>> devicesDaily = getNormalizedDevLists(devices);
+        String pattern = "yyyy-MM-dd";
+        Map<String, Map<String, Integer>> devicesDaily = getNormalizedDevLists(devices, pattern);
         model.addAttribute("devicesDaily", devicesDaily);
         return "alldevconsumptiondaily";
     }
@@ -45,17 +46,26 @@ public class DeviceDetailesController {
     @GetMapping("/alldevconsumptionmonthly")
     public String getDeviceAllDevMonthlyConsumption(Model model) {
         List<Device> devices = deviceRepo.getAllDeviceMonthly(10);
-        Map<String, Map<String, Integer>> devicesDaily = getNormalizedDevLists(devices);
+        String pattern = "yyyy-MM-dd";
+        Map<String, Map<String, Integer>> devicesDaily = getNormalizedDevLists(devices, pattern);
         model.addAttribute("devicesMonthly", devicesDaily);
         return "alldevconsumptionmonthly";
     }
 
-    private Map<String, Map<String, Integer>> getNormalizedDevLists(List<Device> deviceList) {
+    @GetMapping("/alldevconsumptionhourly")
+    public String getDeviceAllDevHourlyConsumption(Model model) {
+        List<Device> devices = deviceRepo.getAllDeviceHourly();
+        String pattern = "yyyy-MM-dd HH-mm";
+        Map<String, Map<String, Integer>> devicesHourly = getNormalizedDevLists(devices, pattern);
+        model.addAttribute("devicesHourly", devicesHourly);
+        return "alldevconsumptionhourly";
+    }
+
+    private Map<String, Map<String, Integer>> getNormalizedDevLists(List<Device> deviceList, String pattern) {
         Map<String, Map<String, Integer>> data = new HashMap<>();
         List<List<Device>> lists = new ArrayList<>();
 
         Set<String> datesSet = new HashSet<>();
-        String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         for (Device d : deviceList) {
             String date = simpleDateFormat.format(d.getObsDate());

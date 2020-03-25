@@ -19,7 +19,7 @@
 
 <script th:inline="javascript">
         /*<![CDATA[*/
-        var listVals = /*[[${devicesDaily}]]*/ "Test3";
+        var listVals = /*[[${devicesHourly}]]*/ "Test3";
         /*]]>*/
         var colorsVar = ["blue", "red", "green", "brown"];
         var counter = 0;
@@ -27,19 +27,10 @@
         var listData = [];
         var data = [];
 
-        minDate = new Date();
-        maxDate = new Date();
-
         for (let [key, value] of Object.entries(listVals)) {
             var dataPoints = [];
-            for (let [key1, value1] of Object.entries(value)) {
-                dataPoints.push({y: value1, x: new Date(key1)});
-                if (minDate > new Date(key1)) {
-                    minDate = new Date(key1);
-                }
-                // if (maxDate < new Date(key1)) {
-                //     maxDate = new Date(key1);
-                // }
+            // for (let [key1, value1] of Object.entries(value)) {
+            //     dataPoints.push({y: value1, x: new Date(key1)});
             }
             data.push(dataPoints);
             listData.push(data);
@@ -51,21 +42,19 @@
             var chart = new CanvasJS.Chart("chartContainer", {
                 zoomEnabled: true,
                 animationEnabled: true,
-                // dataPointWidth: window.innerWidth/(dataPoints.length * 1.8),
                 title:{
-                    text: "Daily consumption all devices",
+                    text: "Hourly consumption all devices",
                     fontFamily: "arial black",
                     fontColor: "#695A42"
                 },
                 axisX: {
-                    minimum: minDate,
-                    // maximum: CanvasJS.formatDate(maxDate),
+                    title: "Hours",
+                    valueFormatString: "DD MMM",
                     labelAngle: -60,
-                    interval: 1,
-                    intervalType: "day",
+                    interval: 1
                 },
                 axisY:{
-                    title: "Daily consumption in kWt",
+                    title: "Hourly consumption in kWt",
                     valueFormatString: "##0",
                     gridColor: "#B6B1A8",
                     tickColor: "#B6B1A8"
@@ -80,7 +69,7 @@
                         showInLegend: true,
                         color: colorsVar[0],
                         name: "null",
-                        dataPoints: []
+                        dataPoints: null
                     },
                     {
                         type: "stackedColumn",
@@ -88,7 +77,7 @@
                         showInLegend: true,
                         name: "null",
                         color: colorsVar[0],
-                        dataPoints: []
+                        dataPoints: null
                     },
                     {
                         type: "stackedColumn",
@@ -96,7 +85,7 @@
                         indexLabel: "label",
                         name: "null",
                         color: colorsVar[0],
-                        dataPoints: []
+                        dataPoints: null
                     },
                     {
                         type: "stackedColumn",
@@ -104,7 +93,7 @@
                         indexLabel: "label",
                         name: "null",
                         color: colorsVar[0],
-                        dataPoints: []
+                        dataPoints: null
                     },
                     {
                         type: "stackedColumn",
@@ -112,7 +101,7 @@
                         indexLabel: "label",
                         name: "null",
                         color: colorsVar[0],
-                        dataPoints: []
+                        dataPoints: null
                     },
                     {
                         type: "stackedColumn",
@@ -120,7 +109,7 @@
                         indexLabel: "label",
                         name: "null",
                         color: colorsVar[0],
-                        dataPoints: []
+                        dataPoints: null
                     },
                     {
                         type: "stackedColumn",
@@ -128,7 +117,7 @@
                         indexLabel: "label",
                         name: "null",
                         color: colorsVar[0],
-                        dataPoints: []
+                        dataPoints: null
                     }]
             });
             
@@ -158,7 +147,6 @@
             }
 
         }
-
     </script>
 
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
