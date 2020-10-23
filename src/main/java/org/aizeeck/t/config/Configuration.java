@@ -12,7 +12,9 @@ public final class Configuration {
     private Configuration() {
         this.properties = new Properties();
         try {
-            properties.load(new FileReader("/home/aizeeck/Dropbox/t.properties"));
+            properties.load(new FileReader("/home/aizeeck/aizeecks/dev/TesyWebServer/src/main/resources/t.properties"));
+//            properties.load(new FileReader("/home/aizeeck/dev/TesyWebServer/src/main/resources/t.properties"));
+            System.out.println(properties);
         } catch (IOException e) {
             e.printStackTrace();
         }

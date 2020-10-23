@@ -17,11 +17,11 @@ public class CookieValidator {
         Connection.Response response;
         Document document = null;
         try {
-            response = Jsoup.connect(HOME)
+            response = Jsoup.connect("https://www.mytesy.com/?do=home")
                     .cookies(dbCookies)
                     .method(Connection.Method.GET)
                     .execute();
-            document = response.parse();
+                document = response.parse();
         } catch (IOException e) {
             e.printStackTrace();
         }
